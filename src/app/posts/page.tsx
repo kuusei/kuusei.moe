@@ -9,19 +9,19 @@ async function getPosts() {
 
 async function Page() {
   const posts = await getPosts();
+  const postFrontmatters = await Promise.all(posts.map((post) => getPostFrontmatter(post)));
 
   return (
     <section>
-      {posts.map(async (post) => {
+      {posts.map((post, index) => {
         const [category, slug] = getPostSlug(post);
-        const postFrontmatter = await getPostFrontmatter(post);
 
         return (
-          <div key={post}>
-            <Link href={`/posts/${category}/${slug}`}>{postFrontmatter.title}</Link>
-            <div>{postFrontmatter.date}</div>
+          <div key={index}>
+            <Link href={`/posts/${category}/${slug}`}>{postFrontmatters[index]?.title}</Link>
+            <div>{postFrontmatters[index]?.date}</div>
             <div>
-              {postFrontmatter.tags?.map((tag) => (
+              {postFrontmatters[index]?.tags?.map((tag) => (
                 <span key={tag} className="pr-4">
                   {tag}
                 </span>

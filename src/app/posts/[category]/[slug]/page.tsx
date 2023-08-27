@@ -54,8 +54,9 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <article className="markdown-body max-w-[750px] mt-10">
+        PostId: {category} {slug}
         {/* @ts-ignore */}
-        PostId: {slug} {params.id} <Component components={components} />.
+        <Component components={components} />
       </article>
     </div>
   );
