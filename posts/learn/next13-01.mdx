@@ -1,0 +1,46 @@
+---
+title: "next13学习记录01"
+date: "2023-08-27 16:30:25"
+tags:
+  - "前端"
+  - "react"
+  - "next.js(App)"
+toc: true
+heroImage: ""
+heroImageAspectRatio: ""
+draft: true
+---
+
+![Image 1693127662389](/images/27e15758f70a27d9ca91f2c91d09d086c4ca75f53104cc99069232ee48b043be.jpg)
+
+## 前情提要
+
+最近终于有点时间, 想起来自己已经写 angular 一年多了, 再不写写别的框架都不会写前端
+
+同时前段时间 blog 挂掉了, 于是就想换个语言写写, 尽量和现在的技术栈不一样
+
+## 技术选型
+
+前几天在 https://www.v2ex.com/t/967560 看到 react 有好多新东西, 之前不喜欢用 react 就是因为 class component 和 jsx 以及 css in js 这些东西都长的很丑, 实在是跟优雅没什么关系
+
+但是现在有 tailwindcss 和 函数式组件了, 感觉和之前学的 vue3.2 也差不多了(, 另外看到 radix/shadcn 组件库是真的好用, 于是就决定用 react 全家桶了
+
+写 angular 的时候, ivy 的 aot 虽然很好用, 但干什么都要注册一大堆东西, 最近的一个项目我已经简化了非常多了, 但还是写着很麻烦, 然后看到 next.js 的文件结构路由, 感觉 angular 这块是真的啰嗦 😂
+
+还有一点就是, angular 16 也开始弄 reactive 属性了, 前端三大框架都开始搞 fp + immutable 了, 那 angular 的优势还有什么呢? 🤔️
+
+## 踩坑记录 01
+
+### App router
+
+其实学 next.js 的时机有点巧, 正好 next 13 大改了一堆东西, 之前的文档都过时了, 学新的这套历史包袱少多了. 但问题是教程也很少 😂, 正好也啃啃官方文档, 就当学英语了
+
+app router 一个核心的改变就是把之前的 getStaticPaths/getStaticProps 等几个 ssr/ssg api 改了(见 https://nextjs.org/docs/app/api-reference/file-conventions, 顺便提一嘴, 这个文档也是我第一次看到文档有写项目结构和文件结构的, 每个文件里要写什么能写什么, 例子都给的很全, 写的是真好), getStaticPaths 换成用 generateStaticParams 了, 原来的一些参数也都改成 Route Segment Config 了.
+
+然后 getStaticProps 就直接去掉了, 现在自己随便写一个方法调用就好了, 写起来其实比之前还舒服一点, api 又少了一个.
+
+### 部署
+
+一开始我还以为 build 完和别的框架差不多, 会直接有一个 index.html 之类的东西, 结果 build 里面一堆乱七八糟的东西, 查了查才看到有个 output 选项, 用这个就可以 build 出来一堆 html 文件, 然后随便用啥就可以部署了.
+
+当然对于我这种大部分页面都是 ssg 的项目来说, 随便找个什么地方部署都行, 那不如直接用 vercel 的工具部署, 每次推送一下更新就自动编译了, CI 都不用自己搞了.
