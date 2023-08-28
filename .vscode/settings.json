@@ -1,8 +1,6 @@
 {
-    "markdown-image.local.path": "/public/images",
-    "markdown-image.local.referencePath": "/images/",
-    "markdown-image.base.altFormat": "Image ${timestamp}",
-    "cSpell.words": [
-        "Frontmatters"
-    ]
+  "markdown-image.local.path": "/public/images",
+  "markdown-image.local.referencePath": "/images/",
+  "markdown-image.base.altFormat": "Image ${timestamp}",
+  "cSpell.words": ["Frontmatters"]
 }

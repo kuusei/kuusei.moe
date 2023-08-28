@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import * as React from "react";
+import Link from "next/link";
 
+import { cn } from "@/utils/shadcn";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,7 +13,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/utils/shadcn";
 
 const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
   ({ className, title, children, ...props }, ref) => {

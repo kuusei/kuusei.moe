@@ -1,7 +1,7 @@
+import * as React from "react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import * as React from "react";
 
 import { cn } from "@/utils/shadcn";
 
@@ -9,10 +9,10 @@ const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
 >(({ className, children, ...props }, ref) => (
-  <div className={cn("relative w-screen z-10")}>
+  <div className={cn("relative z-10 w-screen")}>
     <NavigationMenuPrimitive.Root
       ref={ref}
-      className={cn("flex max-w-max flex-1 items-center mx-auto justify-center", className)}
+      className={cn("mx-auto flex max-w-max flex-1 items-center justify-center", className)}
       {...props}
     >
       {children}
@@ -79,10 +79,10 @@ const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
 >(({ className, ...props }, ref) => (
-  <div className={cn("absolute left-0 right-0 top-full flex justify-center")}>
+  <div className={cn("absolute inset-x-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=closed]:fade-out data-[state=open]:zoom-in-90 data-[state=open]:fade-in md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-top overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
         className
       )}
       ref={ref}
