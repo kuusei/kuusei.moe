@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const dayjs = require("dayjs");
-const matter = require("gray-matter");
+import * as fs from "fs";
+import path from "path";
+import dayjs from "dayjs";
+import matter from "gray-matter";
 
 const postDir = path.resolve(process.cwd(), "./posts");
 

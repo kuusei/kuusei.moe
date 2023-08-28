@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "new:post": "ts-node ./scripts/new-post",
+    "new:post": "ts-node -r esm ./scripts/new-post",
     "build": "next build",
     "start": "next start",
     "start:static": "npx serve@latest out",
@@ -52,6 +52,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "esm": "^3.2.25",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2",

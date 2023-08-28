@@ -1,6 +1,6 @@
-const fs = require("fs").promises;
-const matter = require("gray-matter");
-const dayjs = require("dayjs");
+import fs from "fs/promises";
+import dayjs from "dayjs";
+import matter from "gray-matter";
 
 const updateFrontmatter = async () => {
   const [, , ...mdFilePaths] = process.argv;
