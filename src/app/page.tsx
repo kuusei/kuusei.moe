@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <h1 className="mt-36 text-6xl">Kuusei Blog</h1>
 
-      <div className="mt-12 w-full">
+      <div className="mt-12 flex w-full justify-center">
         <Link
           href={"/posts"}
           className="group mt-20 block w-fit rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"

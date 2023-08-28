@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { category: string; slu
 
   return (
     <div>
-      <article className="sticky top-0 z-40 mt-20 w-full border-b bg-background">
+      <article className="markdown-body mb-20 mt-10 max-w-[750px]">
         PostId: {category} {slug}
         <Component components={components} />
       </article>
