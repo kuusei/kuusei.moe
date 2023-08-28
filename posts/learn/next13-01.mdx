@@ -1,14 +1,15 @@
 ---
-title: "next13学习记录01"
-date: "2023-08-27 16:30:25"
+title: next13学习记录01
+date: '2023-08-27 16:30:25'
 tags:
-  - "前端"
-  - "react"
-  - "next.js(App)"
+  - 前端
+  - react
+  - next.js(App)
 toc: true
-heroImage: ""
-heroImageAspectRatio: ""
+heroImage: ''
+heroImageAspectRatio: ''
 draft: true
+updatedOn: '2023-08-28 23:04'
 ---
 
 ![Image 1693127662389](/images/27e15758f70a27d9ca91f2c91d09d086c4ca75f53104cc99069232ee48b043be.jpg)
@@ -44,3 +45,15 @@ app router 一个核心的改变就是把之前的 getStaticPaths/getStaticProps
 一开始我还以为 build 完和别的框架差不多, 会直接有一个 index.html 之类的东西, 结果 build 里面一堆乱七八糟的东西, 查了查才看到有个 output 选项, 用这个就可以 build 出来一堆 html 文件, 然后随便用啥就可以部署了.
 
 当然对于我这种大部分页面都是 ssg 的项目来说, 随便找个什么地方部署都行, 那不如直接用 vercel 的工具部署, 每次推送一下更新就自动编译了, CI 都不用自己搞了.
+
+### Eslint 和 自动化
+
+一直以来都是顺其自然的用 eslint 和 perttier 这些东西, 也都没怎么研究过 src 外面的配置文件一大堆都是干嘛的.
+
+这次花了很多时间自己配了一套 eslint 和 perttier 的配置, 其实配起来也是满简单的, 就是 config 和 plugin 里面引入一下配置, 然后根据手动调整一下规则就好了, 弄完之后 lint 一下, 感觉特别爽(
+
+另外一块就是弄了 prettier 的配置, 前段时间一直有强迫症, 都用 perttier 重排序 import, 但是默认配置其实就只是字母排序一下, 排完其实变得更乱了, 各种不同的依赖都互相引入, 看着也不是很爽. 这次看到 shadcn 给的模版用了一个 prettier-plugin-sort-imports 库, 研究了一下这个怎么用, 终于可以根据自己想要的格式来排序依赖了, 感觉特别特别爽(
+
+最后还弄了点自动化, 以前一直好奇 npm script 里面的 prepare 是干嘛的, 现在才搞懂这个可以用来配置自动化, 配合 lintstaged, 可以自动 eslint 检查以及文章自动更新时间等等功能, 写文章越来越方便了(
+
+这块还有很多值得弄的脚本, 未来再慢慢研究吧.

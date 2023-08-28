@@ -1,0 +1,3 @@
+{
+  "posts/**/*.{md,mdx}": "ts-node -r esm ./scripts/update-frontmatter"
+}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -6,19 +5,21 @@ export default function Home() {
     <>
       <h1 className="mt-36 text-6xl">Kuusei Blog</h1>
 
-      <Link
-        href={"/posts"}
-        className="mt-20 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Posts{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>正在绝赞开发中...</p>
-      </Link>
+      <div className="mt-12 flex w-full justify-center">
+        <Link
+          href={"/posts"}
+          className="group mt-20 block w-fit rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          rel="noopener noreferrer"
+        >
+          <h2 className={"mb-3 text-2xl font-semibold"}>
+            Posts{" "}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -&gt;
+            </span>
+          </h2>
+          <p className={"m-0 max-w-[30ch] text-sm opacity-50"}>正在绝赞开发中...</p>
+        </Link>
+      </div>
     </>
   );
 }
