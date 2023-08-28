@@ -1,0 +1,62 @@
+---
+title: ts-node套娃报错解决指南
+date: '2023-08-29 00:16:10'
+tags:
+  - node.js
+  - ts-node
+toc: true
+heroImage: ''
+heroImageAspectRatio: ''
+draft: false
+updatedOn: '2023-08-29 00:35'
+---
+
+### 前情提要
+
+一直以来, 在 node 里写脚本都是一件很麻烦的事情, 默认状态下, node 不支持用 import 导入, 就只能用 require, 导入完不仅没有代码提示, 而且还有很多奇怪的报错, const 引入的 require 作用域也很不正常, 如果你一用 import, 你就会得到一个经典报错.
+
+```
+  Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+```
+
+然后跟着这个配置, 又或者去 stackoverflow 查, 他们都让你改 package.json, 但你一加完, 又会看到一个经典提示 `Unknown file extension ".ts"`, 然后去搜这个问题, 又会让你把 `"type": "module"` 去掉,
+
+### 网上流行的解决方法
+
+这个问题从 2020 年开始就一直有人提, 其实很简单, 给 ts-node 加一个 esm 参数即可, 但诸如 https://github.com/TypeStrong/ts-node/issues/935.
+
+```json
+  "esModuleInterop": true,
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+```
+
+或 https://stackoverflow.com/questions/62096269
+
+```
+  ts-node-esm *.ts
+```
+
+给出的解决方案, 都是有问题的, 前者需要在 package.json 中保持 `"type": "module"`, 如果项目里只有脚本还好, 如果是一个前端项目, 额外写了一些脚本, 这种写法又会导致前端部分报错.
+
+```
+  ReferenceError: module is not defined in ES module scope
+```
+
+而后者需要在 tsconfig 里设置成 `"module": "CommonJS"`, 但诸如 next.js 等框架, 是需要配置成 es2015 leater 的, 因此这种写法也会导致前端编译报错.
+
+类似这个的还有 `node --loader ts-node/esm`, `ts-node --esm`, 这几种方法其实都写在官网了 https://typestrong.org/ts-node/docs/imports, 当然 tsconfig 是可以给 ts-node 嵌套配置的, 让 ts-node 单独走 `"module": "CommonJS"`, 只是这样配起来是在是太麻烦了.
+
+除此之外, 还有各种奇技淫巧, 例如使用 .mts 后缀等, 就不再赘述了.
+
+### 最终方案
+
+其实 npm 有个很多年没更新的包 esm:https://www.npmjs.com/package/esm 装了之后使用
+
+```
+  ts-node -r esm *.ts
+```
+
+即可, 无论你的 package.json 或者 tsconfig 配置成什么样, 都可以运行了
