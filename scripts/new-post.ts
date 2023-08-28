@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const dayjs = require("dayjs");
+const matter = require("gray-matter");
 
 const postDir = path.resolve(process.cwd(), "./posts");
 
@@ -37,17 +38,18 @@ const createPost = async () => {
     return;
   }
 
-  const mdxTemplate = `---
-title: "${title}"
-date: "${dayjs().format("YYYY-MM-DD HH:mm:ss")}"
-tags:${tags.map((tag) => `\n  - "${tag}"`).join("")}
-toc: true
-heroImage: ""
-heroImageAspectRatio: ""
-draft: true
----`;
+  const newFrontmatter = {
+    title,
+    date: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    tags: tags,
+    toc: true,
+    heroImage: "",
+    heroImageAspectRatio: "",
+    draft: true,
+    updatedOn: dayjs().format("YYYY-MM-DD HH:mm"),
+  };
 
-  await fs.promises.writeFile(path.resolve(postDir, categories, postPath), mdxTemplate);
+  await fs.promises.writeFile(path.resolve(postDir, categories, postPath), matter.stringify("", newFrontmatter));
 };
 
 createPost();
