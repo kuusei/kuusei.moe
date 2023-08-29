@@ -2,7 +2,7 @@ import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 
 import { getAllPostNames, getPostFilePaths, getPostSlug, POSTS_PATH } from "@/lib/posts";
-import tagRenderer from "@/utils/tag-tenderer";
+import { MdxComponents } from "@/components/mdx";
 
 export async function generateStaticParams() {
   const posts = await getAllPostNames();
@@ -25,27 +25,6 @@ async function getPost(category: string, slug: string) {
   return code;
 }
 
-const components = {
-  h1: tagRenderer("h1"),
-  h2: tagRenderer("h2"),
-  h3: tagRenderer("h3"),
-  h4: tagRenderer("h4"),
-  h5: tagRenderer("h5"),
-  h6: tagRenderer("h6"),
-  p: tagRenderer("p"),
-  blockquote: tagRenderer("blockquote"),
-  table: tagRenderer("table"),
-  thead: tagRenderer("thead"),
-  tbody: tagRenderer("tbody"),
-  tr: tagRenderer("tr"),
-  th: tagRenderer("th"),
-  td: tagRenderer("td"),
-  img: tagRenderer("img"),
-  em: tagRenderer("em"),
-  strong: tagRenderer("strong"),
-  del: tagRenderer("del"),
-};
-
 export default async function Page({ params }: { params: { category: string; slug: string } }) {
   const { category, slug } = params;
   const code = await getPost(category, slug);
@@ -55,7 +34,7 @@ export default async function Page({ params }: { params: { category: string; slu
     <div>
       <article className="markdown-body mb-20 mt-10 max-w-[750px]">
         PostId: {category} {slug}
-        <Component components={components} />
+        <Component components={MdxComponents} />
       </article>
     </div>
   );
