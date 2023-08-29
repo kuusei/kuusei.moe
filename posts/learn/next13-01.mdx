@@ -8,8 +8,8 @@ tags:
 toc: true
 heroImage: ''
 heroImageAspectRatio: ''
-draft: true
-updatedOn: '2023-08-28 23:04'
+draft: false
+updatedOn: '2023-08-30 01:47'
 ---
 
 ![Image 1693127662389](/images/27e15758f70a27d9ca91f2c91d09d086c4ca75f53104cc99069232ee48b043be.jpg)
@@ -56,4 +56,27 @@ app router 一个核心的改变就是把之前的 getStaticPaths/getStaticProps
 
 最后还弄了点自动化, 以前一直好奇 npm script 里面的 prepare 是干嘛的, 现在才搞懂这个可以用来配置自动化, 配合 lintstaged, 可以自动 eslint 检查以及文章自动更新时间等等功能, 写文章越来越方便了(
 
-这块还有很多值得弄的脚本, 未来再慢慢研究吧.
+### window is not defined
+
+<LinkCard
+  url="https://nextjs.org/docs/app/building-your-application/rendering/client-components#how-are-client-components-rendered"
+  symbol="@"
+  title="How are Client Components Rendered?"
+  description="In Next.js, Client Components are rendered differently depending on whether the request is part of a full page load (an initial visit to your application or a page reload triggered by a browser refresh) or a subsequent navigation."
+/>
+
+在 next 13 之后, app router 下的 tsx 和以前的是完全不一样的, 首先它会在服务端预渲染服务端组件的 html, 然后再客户端显示并使用 hydration, 这里有一个误区, 当使用 "use client" 时, 很容易以为在整个函数式组件执行过程中都有 window, dom 等东西, 但实际上需要等到 useLayoutEffect 时, 你才能获取到这个值, 否则哪怕你对 window 属性用了可选链, 他仍然会报错(这里还是有点疑惑的, 之后会继续研究)
+
+在 src 和 crc 组件混用的情况下, 通常的设计是: 
+  - 将数据获取的部分写成服务端渲染, 这部分代码甚至可以使用诸如 fs path 这样的 node.js 库
+    - 然后将服务端组件的获取到的数据传给客户端组件
+  - 将固定的, 没有复杂 js 操作的部分写成服务端渲染, 例如 button, link 这样的轻组件
+  - 将复杂的, 对页面改动极大的组件设置写成客户端渲染
+  - 将需要在线数据的, 或需要 useEffect 的地方写成客户端渲染
+  - 将本地储存, 编译时就确定的数据写成 SSG 模式, SSG 不影响使用 src 或 crc 组件
+
+最后补充一段 react 官方两年前的设计
+
+<YouTube videoId="TQQPAU21ZUw" />
+
+关于 next 13 的 src 等新东西, 还有很多坑要踩, 如何在服务端和客户端直接方便的传输数据, 控制全局变量的生效等, 就留作以后继续研究了
