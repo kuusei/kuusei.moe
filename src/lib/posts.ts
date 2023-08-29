@@ -11,7 +11,7 @@ let cachePosts: string[] | null = null;
 export const POSTS_PATH = path.join(process.cwd(), "posts");
 
 export async function getAllPostNames() {
-  const posts: string[] = cachePosts || (await glob(["posts/**/*.mdx"]));
+  const posts: string[] = cachePosts || (await glob(["posts/**/*.mdx"])).reverse();
   cachePosts = posts;
   return posts;
 }
