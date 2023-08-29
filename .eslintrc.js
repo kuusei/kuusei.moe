@@ -10,13 +10,12 @@ module.exports = {
     "next",
     "prettier",
     "plugin:@typescript-eslint/recommended",
-    "plugin:compat/recommended", // browser
     "plugin:tailwindcss/recommended", // tailwind
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:prettier/recommended",
   ],
-  plugins: ["@typescript-eslint", "compat", "tailwindcss", "react", "prettier"],
+  plugins: ["@typescript-eslint", "tailwindcss", "react", "prettier"],
   overrides: [
     {
       env: {
