@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { category: string; slu
 
   return (
     <div>
-      <article className="markdown-body mb-20 mt-10 max-w-[750px]">
+      <article className="markdown-body mb-20 mt-10 w-auto lg:max-w-[1000px]">
         PostId: {category} {slug}
         <Component components={MdxComponents} />
       </article>

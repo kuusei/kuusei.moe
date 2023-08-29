@@ -1,5 +1,10 @@
 import tagRenderer from "@/utils/tag-tenderer";
 
+import Bilibili from "./embeds/Bilibili";
+import CodePen from "./embeds/CodePen";
+import CodeSandbox from "./embeds/CodeSandbox";
+import StackBlitz from "./embeds/StackBlitz";
+import YouTube from "./embeds/YouTube";
 import LinkCard from "./LinkCard";
 
 export const MdxComponents = {
@@ -21,5 +26,10 @@ export const MdxComponents = {
   em: tagRenderer("em"),
   strong: tagRenderer("strong"),
   del: tagRenderer("del"),
+  Bilibili,
+  CodePen,
+  CodeSandbox,
+  StackBlitz,
+  YouTube,
   LinkCard,
 };
