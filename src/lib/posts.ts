@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import dayjs from "dayjs";
 import glob from "fast-glob";
 import matter from "gray-matter";
 
@@ -32,4 +33,20 @@ export async function getPostFrontmatter(post: string): Promise<PostFrontmatter>
   const frontmatter = matter(rawMdx).data as PostFrontmatter;
   cache.set(post, frontmatter);
   return frontmatter;
+}
+
+export async function getPosts() {
+  const posts = await getAllPostNames();
+  const postFrontmatters = await Promise.all(posts.map((post) => getPostFrontmatter(post)));
+  const postWithDatas = posts.map((post, index) => {
+    const [category, slug] = getPostSlug(post);
+    return {
+      ...postFrontmatters[index],
+      slug,
+      category,
+      post,
+    };
+  });
+  postWithDatas.sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());
+  return postWithDatas;
 }
