@@ -1,8 +1,10 @@
+import { Pencil } from "lucide-react";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 
-import { getAllPostNames, getPostFilePaths, getPostSlug, POSTS_PATH } from "@/lib/posts";
+import { getAllPostNames, getPostFilePaths, getPostFrontmatter, getPostSlug, POSTS_PATH } from "@/lib/posts";
 import { MdxComponents } from "@/components/mdx";
+import Tag from "@/components/ui-custom/tag";
 
 export async function generateStaticParams() {
   const posts = await getAllPostNames();
@@ -28,13 +30,19 @@ async function getPost(category: string, slug: string) {
 export default async function Page({ params }: { params: { category: string; slug: string } }) {
   const { category, slug } = params;
   const code = await getPost(category, slug);
-  const Component = getMDXComponent(code);
+  const frontmatter = await getPostFrontmatter(`posts/${category}/${slug}.mdx`);
+  const MDX = getMDXComponent(code);
 
   return (
-    <div>
-      <article className="markdown-body mb-20 mt-10 w-auto lg:max-w-[1000px]">
-        PostId: {category} {slug}
-        <Component components={MdxComponents} />
+    <div className="flex flex-col items-center">
+      <h1 className="mb-4 flex items-center text-center">
+        <div className="text-2xl">{frontmatter.title}</div>
+        {frontmatter.draft ? <Pencil size={12} className="ml-2" /> : ""}
+      </h1>
+      <div>{frontmatter.tags && <Tag tags={frontmatter.tags} className="px-2 text-xs" />}</div>
+      <span className="text-sm">{frontmatter.date}</span>
+      <article className="markdown-body my-10 w-auto lg:max-w-[1000px]">
+        <MDX components={MdxComponents} />
       </article>
     </div>
   );
