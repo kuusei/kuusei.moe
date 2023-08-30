@@ -4,6 +4,7 @@ import { getMDXComponent } from "mdx-bundler/client";
 
 import { getAllPostNames, getPostFilePaths, getPostFrontmatter, getPostSlug, POSTS_PATH } from "@/lib/posts";
 import { MdxComponents } from "@/components/mdx";
+import Tag from "@/components/ui-custom/tag";
 
 export async function generateStaticParams() {
   const posts = await getAllPostNames();
@@ -38,16 +39,7 @@ export default async function Page({ params }: { params: { category: string; slu
         <div className="text-2xl">{frontmatter.title}</div>
         {frontmatter.draft ? <Pencil size={12} className="ml-2" /> : ""}
       </h1>
-      <div>
-        {frontmatter.tags?.map((tag) => (
-          <span
-            key={tag}
-            className="px-2 text-xs font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      <div>{frontmatter.tags && <Tag tags={frontmatter.tags} className="px-2 text-xs" />}</div>
       <span className="text-sm">{frontmatter.date}</span>
       <article className="markdown-body my-10 w-auto lg:max-w-[1000px]">
         <MDX components={MdxComponents} />
