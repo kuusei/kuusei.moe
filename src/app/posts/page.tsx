@@ -1,5 +1,6 @@
 import Link from "next/link";
 import dayjs from "dayjs";
+import { Pencil } from "lucide-react";
 
 import { getAllPostNames, getPostFrontmatter, getPostSlug } from "@/lib/posts";
 import { Badge } from "@/components/ui/badge";
@@ -19,47 +20,48 @@ async function Page() {
     <section className="w-full">
       {posts.map((post, index: number) => {
         const [category, slug] = getPostSlug(post);
-        const postFrontmatter = postFrontmatters[index];
+        const frontmatter = postFrontmatters[index];
 
         return (
-          <section key={index} className="mx-auto mb-8 flex w-auto max-w-[650px] flex-col">
-            <div className="flex items-center justify-between">
-              <div>
-                <Badge variant="outline">{category}</Badge>
-                <Button variant="link">
-                  <Link href={`/posts/${category}/${slug}`}>{postFrontmatter.title}</Link>
-                </Button>
-              </div>
-              <div className="flex">
+          (!frontmatter.draft || process.env.NODE_ENV !== "production") && (
+            <section key={index} className="mx-auto mb-8 flex w-auto max-w-[650px] flex-col">
+              <div className="flex items-center justify-between">
                 <div>
-                  {postFrontmatter.updatedOn && (
-                    <TooltipProvider delayDuration={100} skipDelayDuration={0}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>{dayjs(postFrontmatter.date).format("YYYY/MM/DD")}</span>
-                        </TooltipTrigger>
-                        <TooltipContent asChild>
-                          <span className="text-sm text-muted-foreground">
-                            update time: {postFrontmatter.updatedOn}
-                          </span>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
+                  <Badge variant="outline">{category}</Badge>
+                  <Button variant="link">
+                    <Link href={`/posts/${category}/${slug}`}>{frontmatter.title}</Link>
+                    {frontmatter.draft ? <Pencil size={12} className="ml-2" /> : ""}
+                  </Button>
+                </div>
+                <div className="flex">
+                  <div>
+                    {frontmatter.updatedOn && (
+                      <TooltipProvider delayDuration={100} skipDelayDuration={0}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span>{dayjs(frontmatter.date).format("YYYY/MM/DD")}</span>
+                          </TooltipTrigger>
+                          <TooltipContent asChild>
+                            <span className="text-sm text-muted-foreground">update time: {frontmatter.updatedOn}</span>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex justify-end">
-              {postFrontmatter.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="pl-4 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </section>
+              <div className="flex justify-end">
+                {frontmatter.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="pl-4 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )
         );
       })}
     </section>
