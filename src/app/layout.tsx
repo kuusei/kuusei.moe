@@ -19,11 +19,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={"flex min-h-screen flex-col items-center p-12 md:p-24 md:pt-12"}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header className={"pb-12"}></Header>
+          <Header className={"sticky pb-12"}></Header>
           {children}
           <TailwindIndicator />
           <BackToTop />
-          <Footer></Footer>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
