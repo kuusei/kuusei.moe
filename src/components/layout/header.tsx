@@ -40,7 +40,7 @@ ListItem.displayName = "ListItem";
 export function Header({ className }: { className?: string }) {
   return (
     <section className={className}>
-      <NavigationMenu>
+      <NavigationMenu delayDuration={50}>
         <NavigationMenuList className={"rounded-md border-[1px]"}>
           <NavigationMenuItem>
             <Link href="/" legacyBehavior passHref>

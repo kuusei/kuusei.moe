@@ -4,6 +4,7 @@ import { getMDXComponent } from "mdx-bundler/client";
 
 import { getAllPostNames, getPostFilePaths, getPostFrontmatter, getPostSlug, POSTS_PATH } from "@/lib/posts";
 import { MdxComponents } from "@/components/mdx";
+import Progress from "@/components/progress";
 import Tag from "@/components/ui-custom/tag";
 
 export async function generateStaticParams() {
@@ -35,6 +36,7 @@ export default async function Page({ params }: { params: { category: string; slu
 
   return (
     <div className="flex flex-col items-center">
+      <Progress />
       <h1 className="mb-4 flex items-center text-center">
         <div className="text-2xl">{frontmatter.title}</div>
         {frontmatter.draft ? <Pencil size={12} className="ml-2" /> : ""}
