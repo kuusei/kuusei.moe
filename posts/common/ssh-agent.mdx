@@ -8,17 +8,17 @@ tags:
 toc: true
 heroImage: ''
 heroImageAspectRatio: ''
-draft: true
-updatedOn: '2023-08-30 22:20'
+draft: false
+updatedOn: '2023-08-31 14:57'
 ---
 
-在使用 git / ssh 时, 一种比较好的习惯是使用 ssh 密钥代替密码, 但如何保存密钥, 是否加密私钥等事情, 又显得很麻烦了. 这时候就可以使用 1p 来管理和生成 ssh 密钥, 
+在使用 git / ssh 时, 一种比较好的习惯是使用 ssh 密钥代替密码, 但如何保存密钥, 是否加密私钥等事情, 又显得很麻烦了. 这时候就可以使用 1p 来管理和生成 ssh 密钥,
 
 ### 创建
 
 在 1p 客户端新建一个 ssh 密钥即可
 
-![Image 1693404258884](/images/7ef81df900b1549d4117a0a7a555505b6623a75f249abbf213d2083f250746e2.png)  
+![Image 1693404258884](/images/7ef81df900b1549d4117a0a7a555505b6623a75f249abbf213d2083f250746e2.png)
 
 这里推荐创建 Ed25519 的密钥, 更安全一些, 兼容性没什么问题, 基本都可以使用
 
@@ -26,7 +26,7 @@ updatedOn: '2023-08-30 22:20'
 
 在设置中的开发者选项中启用 SSH agent
 
-![Image 1693404547164](/images/6a64664751cb488564e86a6ac7d02ff80555d4c617664f9f1ca76ac34e0337aa.png)  
+![Image 1693404547164](/images/6a64664751cb488564e86a6ac7d02ff80555d4c617664f9f1ca76ac34e0337aa.png)
 
 然后在 .ssh/config 加入 1p 的 unix sock 套接字即可
 
@@ -37,7 +37,7 @@ Host *
 
 然后你在执行 ssh 命令或 git pull 时就会弹出授权请求了, 从而实现全自动管理和使用密钥
 
-### One More Thing
+### Git 多用户
 
 ssh 已经成功用上了, 但有个问题, 我有多个 git 账户, 然后我想在提交时自动选择对应的密钥, 而不是每次弹出再拒绝, 重复操作, 这其实也很简单, 只需要用 Host 别名来 clone 代码即可, 例如我的其中一个配置如下
 
@@ -52,4 +52,43 @@ Host kuusei
 
 在 clone 代码时, 只需要从以前的 git clone git@github.com:kuusei/kuusei.moe.git -> git clone kuusei:kuusei/kuusei.moe.git
 
-一步搞定多 git 配置
+### One more thing
+
+在使用新的地址 clone repo 并且你在使用 git lens 插件时, 你会发现, git lens 提供的跳转到 github 功能没用了
+
+![Image 1693462992340](/images/8c76629f064dd6f55cacc53883b5408b5cd36d1318ff853998437a233e118890.png)
+
+这种情况下, 需要手动配置 gitlens.remotes, 并使用正则控制识别的 remotes, 首先使用 `git remote -vv` 命令, 可以看到配置的地址
+
+![Image 1693463131521](/images/f117dd8230cc6effec6bd97556c2a2b55db6d9a7fa25bba0f0067df9b21f7ea9.png)
+
+接着在 vscode 的设置中添加一个配置, 这里我给出我的模版, 也可以参照官方的模版, <LinkCard
+  url="https://help.gitkraken.com/gitlens/gitlens-settings/#remote-provider-integration-settings"
+  symbol="@"
+  title="remote-provider-integration-settings"
+  description="" 
+/>, 我的模版直接 1password 推荐的 url 格式, 用起来更简单一点, 将 [SSH Host] 和 [UserName] 都替换掉即可
+
+```json
+  "gitlens.remotes": [
+    {
+      "regex": "[SSH Host]:([UserName])/(.+).git",
+      "type": "Custom",
+      "name": "[UserName]",
+      "protocol": "[UserName]",
+      "urls": {
+        "repository": "https://github.com/[UserName]/${repo}",
+        "branches": "https://github.com/[UserName]/${repo}/repo-info",
+        "branch": "https://github.com/[UserName]/${repo}/trees/heads/${branch}",
+        "commit": "https://github.com/[UserName]/${repo}/commits/${id}",
+        "file": "https://github.com/[UserName]/${repo}?path=${file}${line}",
+        "fileInBranch": "https://github.com/[UserName]/${repo}/blob/${branch}/${file}${line}",
+        "fileInCommit": "https://github.com/[UserName]/${repo}/blob/${id}/${file}${line}",
+        "fileLine": "#L${line}",
+        "fileRange": "#L${start}-L${end}"
+      }
+    }
+  ]
+```
+
+核心部分就是 regex, 我们需要根据上一步看到的路径来配置正则, 从而让 git lens 提供各种快捷跳转功能
