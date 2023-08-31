@@ -44,7 +44,7 @@ const BackToTop = () => {
     >
       <ChevronsUp
         size={18}
-        className="duration-1000 ease-linear animate-bounce zoom-out-50 transition-all group-hover:translate-y-[-2px]"
+        className="animate-bounce transition-all duration-1000 ease-linear zoom-out-50 group-hover:translate-y-[-2px]"
       />
       {/* <ArrowUp className="text-xl text-white" aria-hidden /> */}
     </div>

@@ -1,3 +1,4 @@
 {
-  "posts/**/*.{md,mdx}": "ts-node -r esm ./scripts/update-frontmatter"
+  "posts/**/*.{md,mdx}": "ts-node -r esm ./scripts/update-frontmatter",
+  "*.{js,jsx,ts,tsx}": "eslint --fix"
 }
