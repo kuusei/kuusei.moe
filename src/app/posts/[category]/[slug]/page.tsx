@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { category: string; slu
       </h1>
       <div>{frontmatter.tags && <Tag tags={frontmatter.tags} className="px-2 text-xs" />}</div>
       <span className="text-sm">{frontmatter.date}</span>
-      <article className="markdown-body my-10 w-auto lg:max-w-[1000px]">
+      <article className="markdown-body my-10 w-auto md:max-w-[750px]">
         <MDX components={MdxComponents} />
       </article>
     </div>
