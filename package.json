@@ -6,7 +6,7 @@
     "dev": "next dev --port 8001",
     "new:post": "ts-node -r esm ./scripts/new-post",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 8002",
     "start:static": "npx serve@latest out",
     "lint": "next lint",
     "lint:fix": "next lint --fix",

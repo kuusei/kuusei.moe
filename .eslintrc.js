@@ -38,14 +38,14 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "react/prop-types": 0,
-    "tailwindcss/no-custom-classname": ["warn", { whitelist: ["^mdx-"] }],
+    "tailwindcss/no-custom-classname": ["warn", { whitelist: ["^mdx-.*", "markdown-.*", "^cu-.*"] }],
   },
   settings: {
     next: {
       rootDir: ["./src/"],
     },
     tailwindcss: {
-      callees: ["cn"],
+      callees: ["cn", "clsx"],
       config: "tailwind.config.ts",
     },
   },
